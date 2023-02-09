@@ -28,9 +28,16 @@ body {
 }
 
 #progress-bar {
-  width: 1%;
+  width: 0%;
   height: 100%;
   background: rgb(51, 131, 252);
+}
+
+#buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 150px;
 }
 
 button {
@@ -43,12 +50,12 @@ button {
   transition: 0.5s;
 }
 
-#buttons-container {
-  width: 300px;
-  display: flex;
-  justify-content: space-between;
-}
-
 button:hover {
   background: gainsboro;
+}
+
+input {
+  padding: 5px;
+  margin-top: 5px;
+  width: 100%;
 }
