@@ -1,0 +1,53 @@
+/* Reset CSS */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20%;
+  height: 100vh;
+  padding: 50px 0;
+}
+
+h1 {
+  color: rgb(82, 82, 82);
+}
+
+#content {
+  border: solid gainsboro;
+  width: 50%;
+  max-width: 600px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+h3 {
+  color: rgb(70, 186, 253);
+}
+
+p {
+  color: rgb(70, 186, 253);
+  font-weight: 700;
+}
+
+span {
+  color: rgb(82, 82, 82);
+  font-weight: normal;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  width: 150px;
+  border: 1px solid gainsboro;
+}
