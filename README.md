@@ -7,6 +7,7 @@
 * [Radio buttons in HTML](https://iq.opengenus.org/radio-buttons-in-html/)
 * [Different ways to delete elements in an array in JavaScript](https://iq.opengenus.org/delete-elements-in-array-in-javascript/)
 * [Progress bar with JavaScript](https://iq.opengenus.org/progress-bar-in-javascript/)
+* [Tracking cursor using JavaScript](https://iq.opengenus.org/p/e1af0451-2139-4967-ae5c-220cfca85621/)
 
 ### Tasks:
 | Progress bar with JavaScript | Tracking cursor using JavaScript |
