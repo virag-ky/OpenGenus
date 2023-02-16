@@ -1,0 +1,66 @@
+/* Reset CSS */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  width: 90%;
+  max-width: 500px;
+  background: grey;
+  border-radius: 30px;
+  padding: 30px;
+}
+
+#display {
+  background: gainsboro;
+  border-radius: 20px;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 30px;
+}
+
+#current-number,
+#previous-number {
+  width: 100%;
+  height: 50%;
+  border-radius: 20px;
+  display: block;
+  text-align: right;
+}
+
+#current-number {
+  border-top: 1px solid black;
+}
+
+#buttons-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+#buttons-container > button:last-of-type {
+  grid-column: 3 / -1;
+  background: rgb(230, 149, 0);
+}
+
+button {
+  padding: 15px 0;
+  font-family: 'Quantico', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 8px rgb(90, 90, 90);
+}
