@@ -15,7 +15,7 @@ buttonsTextContent.forEach((button) => {
   btn.textContent = button;
   btn.setAttribute('id', `${button}`);
   const numberRegex = /[0-9]/;
-  const operationRegex = /[.+\-x÷=]/;
+  const operationRegex = /[.+\-x÷]/;
   // Add a class attribute called 'number' only to the number buttons
   if (button.match(numberRegex)) {
     btn.setAttribute('class', 'number');
@@ -29,6 +29,7 @@ buttonsTextContent.forEach((button) => {
 
 const numbers = [...document.querySelectorAll('.number')];
 const operations = [...document.querySelectorAll('.operation')];
+const equalBtn = document.getElementById('=');
 const clearAllBtn = document.getElementById('AC');
 const clearLastBtn = document.getElementById('C');
 
@@ -39,18 +40,23 @@ switchBtn.addEventListener('click', () => {
     switchBtn.textContent = 'OFF';
     console.log('Turning on');
     switchOnCalculator(numbers, operations, operate, setNumbers);
+    equalBtn.addEventListener('click', getResult);
     clearAllBtn.addEventListener('click', clearAll);
     clearLastBtn.addEventListener('click', clearLast);
     currentNum.textContent = '0';
-    num1 = 0;
   } else {
     switchBtn.textContent = 'ON';
     console.log('Turning off');
     switchOffCalculator(numbers, operations, operate, setNumbers);
+    equalBtn.removeEventListener('click', getResult);
     clearAllBtn.removeEventListener('click', clearAll);
     clearLastBtn.removeEventListener('click', clearLast);
     currentNum.textContent = '';
     previousNum.textContent = '';
+    num1 = 0;
+    num2 = null;
+    result = null;
+    operation = null;
   }
 });
 
@@ -64,34 +70,59 @@ const setNumbers = (e) => {
 const calculate = (num1, num2, operation) => {
   if (operation === '+') {
     return num1 + num2;
+  } else if (operation === '-') {
+    return num1 - num2;
+  } else if (operation === 'x') {
+    return num1 * num2;
+  } else {
+    return num1 / num2;
+  }
+};
+
+const getResult = () => {
+  if (currentNum.textContent !== '' && previousNum.textContent === '') {
+    return;
+  } else if (currentNum.textContent !== '' && previousNum.textContent !== '') {
+    result = calculate(num1, num2, operation);
+    currentNum.textContent = result.toString();
+    previousNum.textContent = '';
+    num1 = result;
+    num2 = null;
+    result = null;
+  } else {
+    currentNum.textContent = previousNum.textContent;
+    previousNum.textContent = '';
   }
 };
 
 const operate = (e) => {
-  if (e.target.textContent === '=') {
-    if (!num2) {
-      return;
+  if (e.target.textContent === '.') {
+    if (
+      !currentNum.textContent.includes('.') &&
+      currentNum.textContent !== ''
+    ) {
+      currentNum.textContent += '.';
     } else {
-      result = calculate(num1, num2, operation);
-      currentNum.textContent = result.toString();
-      previousNum.textContent = '';
+      return;
     }
-  } else if (
-    e.target.textContent === '.' &&
-    !currentNum.textContent.includes('.')
-  ) {
-    currentNum.textContent += '.';
   } else {
     if (!num2 && !operation) {
       previousNum.textContent = currentNum.textContent;
       num1 = Number(previousNum.textContent);
       currentNum.textContent = '';
       operation = e.target.textContent;
-    } else {
+    } else if (!num2 && operation) {
+      operation = e.target.textContent;
+      previousNum.textContent = currentNum.textContent;
+      num1 = Number(previousNum.textContent);
+      currentNum.textContent = '';
+    } else if (num2 && operation) {
       result = calculate(num1, num2, operation);
       previousNum.textContent = result.toString();
       currentNum.textContent = '';
       num1 = result;
+      num2 = null;
+      result = null;
     }
   }
 };
