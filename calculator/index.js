@@ -99,7 +99,6 @@ const getResult = () => {
   } else {
     currentNum.textContent = previousNum.textContent;
     previousNum.textContent = '';
-    return;
   }
 };
 
@@ -126,7 +125,7 @@ const operate = (e) => {
       num1 = result;
       num2 = null;
       result = null;
-    } else {
+    } else if (!num2 && operation) {
       operation = e.target.textContent;
       previousNum.textContent = currentNum.textContent;
       currentNum.textContent = '';
