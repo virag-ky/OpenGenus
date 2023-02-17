@@ -6,6 +6,8 @@ const previousNum = document.getElementById('previous-number');
 const buttonsContainer = document.getElementById('buttons-container');
 let num1;
 let num2;
+let operation;
+let result;
 
 // Create buttons
 buttonsTextContent.forEach((button) => {
@@ -36,21 +38,63 @@ switchBtn.addEventListener('click', () => {
   if (switchBtn.textContent === 'ON') {
     switchBtn.textContent = 'OFF';
     console.log('Turning on');
-    switchOnCalculator(numbers, operations, operate, calculate);
+    switchOnCalculator(numbers, operations, operate, setNumbers);
     clearAllBtn.addEventListener('click', clearAll);
     clearLastBtn.addEventListener('click', clearLast);
+    currentNum.textContent = '0';
+    num1 = 0;
   } else {
     switchBtn.textContent = 'ON';
     console.log('Turning off');
-    switchOffCalculator(numbers, operations, operate, calculate);
+    switchOffCalculator(numbers, operations, operate, setNumbers);
     clearAllBtn.removeEventListener('click', clearAll);
     clearLastBtn.removeEventListener('click', clearLast);
+    currentNum.textContent = '';
+    previousNum.textContent = '';
   }
 });
 
-const calculate = () => {};
+const setNumbers = (e) => {
+  currentNum.textContent += e.target.textContent;
+  if (operation) {
+    num2 = Number(currentNum.textContent);
+  }
+};
 
-const operate = () => {};
+const calculate = (num1, num2, operation) => {
+  if (operation === '+') {
+    return num1 + num2;
+  }
+};
+
+const operate = (e) => {
+  if (e.target.textContent === '=') {
+    if (!num2) {
+      return;
+    } else {
+      result = calculate(num1, num2, operation);
+      currentNum.textContent = result.toString();
+      previousNum.textContent = '';
+    }
+  } else if (
+    e.target.textContent === '.' &&
+    !currentNum.textContent.includes('.')
+  ) {
+    currentNum.textContent += '.';
+  } else {
+    if (!num2 && !operation) {
+      previousNum.textContent = currentNum.textContent;
+      num1 = Number(previousNum.textContent);
+      currentNum.textContent = '';
+      operation = e.target.textContent;
+    } else {
+      result = calculate(num1, num2, operation);
+      previousNum.textContent = result.toString();
+      currentNum.textContent = '';
+      num1 = result;
+    }
+  }
+};
 
 const clearAll = () => {};
 const clearLast = () => {};
