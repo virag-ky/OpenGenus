@@ -1,28 +1,11 @@
+import buttonsTextContent from './modules/buttons.js';
+import { switchOffCalculator, switchOnCalculator } from './modules/onOff.js';
+
 const currentNum = document.getElementById('current-number');
 const previousNum = document.getElementById('previous-number');
 const buttonsContainer = document.getElementById('buttons-container');
-
-const buttonsTextContent = [
-  'ON',
-  'AC',
-  'C',
-  '+',
-  '7',
-  '8',
-  '9',
-  '-',
-  '4',
-  '5',
-  '6',
-  'x',
-  '1',
-  '2',
-  '3',
-  '÷',
-  '0',
-  '.',
-  '=',
-];
+let num1;
+let num2;
 
 // Create buttons
 buttonsTextContent.forEach((button) => {
@@ -42,7 +25,10 @@ buttonsTextContent.forEach((button) => {
   buttonsContainer.appendChild(btn);
 });
 
-const operations = document.querySelectorAll('.operation');
+const numbers = [...document.querySelectorAll('.number')];
+const operations = [...document.querySelectorAll('.operation')];
+const clearAllBtn = document.getElementById('AC');
+const clearLastBtn = document.getElementById('C');
 
 // Turn ON/OFF the calculator
 const switchBtn = document.getElementById('ON');
@@ -50,18 +36,21 @@ switchBtn.addEventListener('click', () => {
   if (switchBtn.textContent === 'ON') {
     switchBtn.textContent = 'OFF';
     console.log('Turning on');
-    operateCalculator();
+    switchOnCalculator(numbers, operations, operate, calculate);
+    clearAllBtn.addEventListener('click', clearAll);
+    clearLastBtn.addEventListener('click', clearLast);
   } else {
     switchBtn.textContent = 'ON';
     console.log('Turning off');
+    switchOffCalculator(numbers, operations, operate, calculate);
+    clearAllBtn.removeEventListener('click', clearAll);
+    clearLastBtn.removeEventListener('click', clearLast);
   }
 });
 
-const operateCalculator = () => {
-  const numbers = [...document.querySelectorAll('.number')];
-  numbers.forEach((number) => {
-    number.addEventListener('click', () => {
-      console.log(number.textContent);
-    });
-  });
-};
+const calculate = () => {};
+
+const operate = () => {};
+
+const clearAll = () => {};
+const clearLast = () => {};
