@@ -60,13 +60,16 @@ switchBtn.addEventListener('click', () => {
   }
 });
 
+// Set the numbers
 const setNumbers = (e) => {
   currentNum.textContent += e.target.textContent;
+  // If we already have an operation clicked, then the next number we type in will be saved in the num2 variable
   if (operation) {
     num2 = Number(currentNum.textContent);
   }
 };
 
+// Perform calculations
 const calculate = (num1, num2, operation) => {
   if (operation === '+') {
     return num1 + num2;
@@ -79,9 +82,12 @@ const calculate = (num1, num2, operation) => {
   }
 };
 
+// Click the equal button to get the final result
 const getResult = () => {
+  // If we only have a current number but no previous, then we just return and do nothing
   if (currentNum.textContent !== '' && previousNum.textContent === '') {
     return;
+    // If we have both current and previous numbers, then we perform the calculation and save it into the result variable
   } else if (currentNum.textContent !== '' && previousNum.textContent !== '') {
     result = calculate(num1, num2, operation);
     currentNum.textContent = result.toString();
@@ -89,9 +95,11 @@ const getResult = () => {
     num1 = result;
     num2 = null;
     result = null;
+    // If we have a previous number but no current, then we just show the previous number in the current field
   } else {
     currentNum.textContent = previousNum.textContent;
     previousNum.textContent = '';
+    return;
   }
 };
 
@@ -111,11 +119,6 @@ const operate = (e) => {
       num1 = Number(previousNum.textContent);
       currentNum.textContent = '';
       operation = e.target.textContent;
-    } else if (!num2 && operation) {
-      operation = e.target.textContent;
-      previousNum.textContent = currentNum.textContent;
-      num1 = Number(previousNum.textContent);
-      currentNum.textContent = '';
     } else if (num2 && operation) {
       result = calculate(num1, num2, operation);
       previousNum.textContent = result.toString();
@@ -123,6 +126,10 @@ const operate = (e) => {
       num1 = result;
       num2 = null;
       result = null;
+    } else {
+      operation = e.target.textContent;
+      previousNum.textContent = currentNum.textContent;
+      currentNum.textContent = '';
     }
   }
 };
