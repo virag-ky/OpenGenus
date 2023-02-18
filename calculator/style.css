@@ -78,3 +78,31 @@ button:hover {
   position: relative;
   top: 10%;
 }
+
+@media (max-width: 600px) {
+  body {
+    overflow-y: auto;
+  }
+
+  #container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  #buttons-container {
+    column-gap: 10px;
+    row-gap: 15px;
+  }
+
+  #current-number {
+    font-size: 2rem;
+  }
+
+  #previous-number {
+    font-size: 1.1rem;
+  }
+
+  button {
+    padding: 10px 0;
+  }
+}
