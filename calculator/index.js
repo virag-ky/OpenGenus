@@ -6,8 +6,10 @@ const previousNum = document.getElementById('previous-number');
 const buttonsContainer = document.getElementById('buttons-container');
 let num1;
 let num2;
-let operation;
+let currentOperation;
+let previousOperation;
 let result;
+let current;
 
 // Create buttons
 buttonsTextContent.forEach((button) => {
@@ -39,34 +41,28 @@ switchBtn.addEventListener('click', () => {
   if (switchBtn.textContent === 'ON') {
     switchBtn.textContent = 'OFF';
     console.log('Turning on');
-    switchOnCalculator(numbers, operations, operate, setNumbers);
+    switchOnCalculator(numbers, operations, setOperation, setNumbers);
     equalBtn.addEventListener('click', getResult);
     clearAllBtn.addEventListener('click', clearAll);
     clearLastBtn.addEventListener('click', clearLast);
     currentNum.textContent = '0';
+    current = 0;
   } else {
     switchBtn.textContent = 'ON';
     console.log('Turning off');
-    switchOffCalculator(numbers, operations, operate, setNumbers);
+    switchOffCalculator(numbers, operations, setOperation, setNumbers);
     equalBtn.removeEventListener('click', getResult);
     clearAllBtn.removeEventListener('click', clearAll);
     clearLastBtn.removeEventListener('click', clearLast);
     currentNum.textContent = '';
     previousNum.textContent = '';
-    num1 = 0;
-    num2 = null;
-    result = null;
-    operation = null;
   }
 });
 
 // Set the numbers
 const setNumbers = (e) => {
   currentNum.textContent += e.target.textContent;
-  // If we already have an operation clicked, then the next number we type in will be saved in the num2 variable
-  if (operation) {
-    num2 = Number(currentNum.textContent);
-  }
+  current = Number(currentNum.textContent);
 };
 
 // Perform calculations
@@ -89,20 +85,21 @@ const getResult = () => {
     return;
     // If we have both current and previous numbers, then we perform the calculation and save it into the result variable
   } else if (currentNum.textContent !== '' && previousNum.textContent !== '') {
-    result = calculate(num1, num2, operation);
+    result = calculate(num1, num2, currentOperation);
     currentNum.textContent = result.toString();
     previousNum.textContent = '';
     num1 = result;
-    num2 = null;
-    result = null;
+
     // If we have a previous number but no current, then we just show the previous number in the current field
   } else {
     currentNum.textContent = previousNum.textContent;
     previousNum.textContent = '';
+    num1 = Number(currentNum.textContent);
+    num2 = null;
   }
 };
 
-const operate = (e) => {
+const setOperation = (e) => {
   if (e.target.textContent === '.') {
     if (
       !currentNum.textContent.includes('.') &&
@@ -113,23 +110,31 @@ const operate = (e) => {
       return;
     }
   } else {
-    if (!num2 && !operation) {
-      previousNum.textContent = currentNum.textContent;
-      num1 = Number(previousNum.textContent);
+    if (!num1 && !num2) {
+      previousOperation = e.target.textContent;
+      num1 = current;
+      previousNum.textContent = `${num1} ${previousOperation}`;
       currentNum.textContent = '';
-      operation = e.target.textContent;
-    } else if (num2 && operation) {
-      result = calculate(num1, num2, operation);
-      previousNum.textContent = result.toString();
+      current = null;
+    } else if (num1 && !num2) {
+      currentOperation = e.target.textContent;
+      num2 = current;
+      result = calculate(num1, num2, previousOperation);
+      previousNum.textContent = `${result} ${currentOperation}`;
+      previousOperation = currentOperation;
       currentNum.textContent = '';
       num1 = result;
+      current = null;
       num2 = null;
-      result = null;
-    } else if (!num2 && operation) {
-      operation = e.target.textContent;
-      previousNum.textContent = currentNum.textContent;
-      currentNum.textContent = '';
     }
+    // } else if (num1 && num2) {
+    //   currentOperation = e.target.textContent;
+    //   result = calculate(num1, num2, previousOperation);
+    //   previousNum.textContent = `${result.toString()} ${currentOperation}`;
+    //   num1 = result;
+    //   num2 = null;
+    //   current = null;
+    // }
   }
 };
 
