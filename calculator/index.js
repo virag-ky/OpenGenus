@@ -160,4 +160,13 @@ const clearAll = () => {
   previousNum.textContent = '';
   currentNum.textContent = '0';
 };
-const clearLast = () => {};
+
+const clearLast = () => {
+  if (currentNum.textContent !== '') {
+    currentNum.textContent = currentNum.textContent
+      .split('')
+      .splice(0, currentNum.textContent.length - 1)
+      .join('');
+    current = Number(currentNum.textContent);
+  }
+};
