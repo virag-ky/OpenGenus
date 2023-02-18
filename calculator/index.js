@@ -73,13 +73,13 @@ const setNumbers = (e) => {
 // Perform calculations
 const calculate = (num1, num2, operation) => {
   if (operation === '+') {
-    return num1 + num2;
+    return (num1 + num2).toFixed(2);
   } else if (operation === '-') {
-    return num1 - num2;
+    return (num1 - num2).toFixed(2);
   } else if (operation === 'x') {
-    return num1 * num2;
+    return (num1 * num2).toFixed(2);
   } else {
-    return num1 / num2;
+    return (num1 / num2).toFixed(2);
   }
 };
 
@@ -132,7 +132,7 @@ const setOperation = (e) => {
       currentOperation = e.target.textContent;
       num2 = current;
       result = calculate(num1, num2, previousOperation);
-      previousNum.textContent = `${result} ${currentOperation}`;
+      previousNum.textContent = `${result.toFixed(2)} ${currentOperation}`;
       previousOperation = currentOperation;
       currentNum.textContent = '';
       num1 = result;
