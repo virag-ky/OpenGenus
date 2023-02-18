@@ -66,20 +66,22 @@ switchBtn.addEventListener('click', () => {
 
 // Set the numbers
 const setNumbers = (e) => {
-  currentNum.textContent += e.target.textContent;
-  current = Number(currentNum.textContent);
+  if (currentNum.textContent.length < 13) {
+    currentNum.textContent += e.target.textContent;
+    current = Number(currentNum.textContent);
+  }
 };
 
 // Perform calculations
 const calculate = (num1, num2, operation) => {
   if (operation === '+') {
-    return (num1 + num2).toFixed(2);
+    return num1 + num2;
   } else if (operation === '-') {
-    return (num1 - num2).toFixed(2);
+    return num1 - num2;
   } else if (operation === 'x') {
-    return (num1 * num2).toFixed(2);
+    return num1 * num2;
   } else {
-    return (num1 / num2).toFixed(2);
+    return num1 / num2;
   }
 };
 
@@ -99,6 +101,12 @@ const getResult = () => {
     num2 = null;
     previousOperation = null;
     currentOperation = null;
+    if (currentNum.textContent.length > 12) {
+      currentNum.textContent = currentNum.textContent
+        .split('')
+        .splice(0, 12)
+        .join('');
+    }
     // If we have a previous number but no current, then we just show the previous number in the current field
   } else {
     currentNum.textContent = num1.toString();
@@ -132,7 +140,7 @@ const setOperation = (e) => {
       currentOperation = e.target.textContent;
       num2 = current;
       result = calculate(num1, num2, previousOperation);
-      previousNum.textContent = `${result.toFixed(2)} ${currentOperation}`;
+      previousNum.textContent = `${result} ${currentOperation}`;
       previousOperation = currentOperation;
       currentNum.textContent = '';
       num1 = result;
@@ -142,5 +150,14 @@ const setOperation = (e) => {
   }
 };
 
-const clearAll = () => {};
+const clearAll = () => {
+  num1 = null;
+  num2 = null;
+  currentOperation = null;
+  previousOperation = null;
+  result = null;
+  current = 0;
+  previousNum.textContent = '';
+  currentNum.textContent = '0';
+};
 const clearLast = () => {};
