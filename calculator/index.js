@@ -47,6 +47,11 @@ switchBtn.addEventListener('click', () => {
     clearLastBtn.addEventListener('click', clearLast);
     currentNum.textContent = '0';
     current = 0;
+    num1 = null;
+    num2 = null;
+    currentOperation = null;
+    previousOperation = null;
+    result = null;
   } else {
     switchBtn.textContent = 'ON';
     console.log('Turning off');
@@ -85,21 +90,28 @@ const getResult = () => {
     return;
     // If we have both current and previous numbers, then we perform the calculation and save it into the result variable
   } else if (currentNum.textContent !== '' && previousNum.textContent !== '') {
-    result = calculate(num1, num2, currentOperation);
+    num2 = current;
+    result = calculate(num1, num2, previousOperation);
     currentNum.textContent = result.toString();
     previousNum.textContent = '';
-    num1 = result;
-
+    current = result;
+    num1 = null;
+    num2 = null;
+    previousOperation = null;
+    currentOperation = null;
     // If we have a previous number but no current, then we just show the previous number in the current field
   } else {
-    currentNum.textContent = previousNum.textContent;
+    currentNum.textContent = num1.toString();
     previousNum.textContent = '';
-    num1 = Number(currentNum.textContent);
-    num2 = null;
+    current = num1;
+    num1 = null;
+    previousOperation = null;
+    currentOperation = null;
   }
 };
 
 const setOperation = (e) => {
+  // Check if the dot is being clicked
   if (e.target.textContent === '.') {
     if (
       !currentNum.textContent.includes('.') &&
@@ -116,7 +128,7 @@ const setOperation = (e) => {
       previousNum.textContent = `${num1} ${previousOperation}`;
       currentNum.textContent = '';
       current = null;
-    } else if (num1 && !num2) {
+    } else {
       currentOperation = e.target.textContent;
       num2 = current;
       result = calculate(num1, num2, previousOperation);
@@ -127,14 +139,6 @@ const setOperation = (e) => {
       current = null;
       num2 = null;
     }
-    // } else if (num1 && num2) {
-    //   currentOperation = e.target.textContent;
-    //   result = calculate(num1, num2, previousOperation);
-    //   previousNum.textContent = `${result.toString()} ${currentOperation}`;
-    //   num1 = result;
-    //   num2 = null;
-    //   current = null;
-    // }
   }
 };
 
