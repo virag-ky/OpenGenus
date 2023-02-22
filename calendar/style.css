@@ -10,6 +10,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
+  background: #e5e3c9;
 }
 
 .arrow {
@@ -20,15 +22,31 @@ table {
   border-collapse: collapse;
   width: 90%;
   max-width: 700px;
+  background: #b4cfb0;
+  border-radius: 20px;
+  font-family: 'Kalam', cursive;
 }
 
 tr,
 th,
 td {
-  border: solid black;
   text-align: center;
+}
+
+thead > tr > th#year-display {
+  border-radius: 20px 20px 0 0;
+}
+
+th {
+  background: #94b49f;
+  padding: 20px 10px;
 }
 
 .week {
   width: 100px;
+}
+
+.days {
+  padding: 10px;
+  border: 1px solid black;
 }

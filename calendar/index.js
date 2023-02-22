@@ -149,7 +149,7 @@ const setDays = () => {
   daysContainer.innerHTML = '';
   let daysId = 0;
 
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i < 5; i++) {
     const week = document.createElement('tr');
     for (let j = 0; j < 7; j++) {
       daysId++;
