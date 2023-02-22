@@ -11,6 +11,7 @@ const monthInput = document.getElementById('month');
 const currentMonth = new Date().getMonth();
 const currentYear = new Date().getFullYear();
 const currentDay = new Date().getDay();
+const currentDate = new Date().getDate();
 const daysContainer = document.getElementById('days');
 const errorMessage = document.getElementById('error');
 
@@ -140,6 +141,18 @@ const setDaysText = () => {
 
   for (let x = 1; x <= Number(lastDay); x++) {
     document.getElementById(`${startDay + 1}`).textContent = daysCount++;
+    if (
+      Number(document.getElementById(`${startDay + 1}`).textContent) ===
+      currentDate
+    ) {
+      const curr = document.getElementById(`${startDay + 1}`);
+      curr.style.background = '#e5e3c9';
+      curr.style.borderRadius = '10px';
+      curr.style.display = 'flex';
+      curr.style.justifyContent = 'center';
+      curr.style.alignItems = 'center';
+      curr.style.color = '#BB6464';
+    }
     startDay++;
   }
 };
