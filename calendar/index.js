@@ -45,6 +45,7 @@ yearInput.addEventListener('change', () => {
   } else if (yearInput.value > 2100 || yearInput.value < 1970) {
     errorMessage.textContent = 'Please, enter a year between 1970-2100.';
   } else {
+    errorMessage.textContent = '';
     yearSpan.textContent = yearInput.value;
     setDays();
   }
@@ -56,6 +57,7 @@ yearSpan.textContent = yearInput.value;
 
 // Select a month
 monthInput.addEventListener('change', () => {
+  errorMessage.textContent = '';
   monthSpan.textContent = monthInput.value;
   setDays();
 });
@@ -65,6 +67,7 @@ monthSpan.textContent = monthInput.value;
 
 // Get previous month
 previousArrowBtn.addEventListener('click', () => {
+  errorMessage.textContent = '';
   yearSpan.textContent =
     monthSpan.textContent === 'January'
       ? Number(yearSpan.textContent) - 1
@@ -78,6 +81,7 @@ previousArrowBtn.addEventListener('click', () => {
 
 // Get next month
 nextArrowBtn.addEventListener('click', () => {
+  errorMessage.textContent = '';
   yearSpan.textContent =
     monthSpan.textContent === 'December'
       ? Number(yearSpan.textContent) + 1
