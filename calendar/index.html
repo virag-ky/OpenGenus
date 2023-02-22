@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <p id="error"></p>
+    <div>
+      <input type="number" id="year" name="year" />
+      <select name="month" id="month"></select>
+    </div>
     <table>
       <thead>
         <tr>
@@ -16,23 +21,15 @@
               <span id="previous" class="arrow">
                 <i class="fas fa-arrow-left"></i>
               </span>
-              <span id="year">Year</span>
-              <span id="month">Month</span>
+              <span id="year-span"></span>
+              <span id="month-span"></span>
               <span id="next" class="arrow">
                 <i class="fas fa-arrow-right"></i>
               </span>
             </div>
           </th>
         </tr>
-        <tr>
-          <th class="week">Sun</th>
-          <th class="week">Mon</th>
-          <th class="week">Tue</th>
-          <th class="week">Wed</th>
-          <th class="week">Thu</th>
-          <th class="week">Fri</th>
-          <th class="week">Sat</th>
-        </tr>
+        <tr id="week"></tr>
       </thead>
       <tbody></tbody>
     </table>
