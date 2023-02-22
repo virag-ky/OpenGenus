@@ -1,20 +1,16 @@
-const yearDisplay = document.getElementById('year');
+import months from './modules/months.js';
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-const currentYear = new Date().getFullYear();
-const currentMonth = new Date().getMonth();
+const previousArrowBtn = document.getElementById('previous');
+const nextArrowBtn = document.getElementById('next');
 
-yearDisplay.textContent = `${currentYear} ${months[currentMonth]}`;
+const getCurrentYearAndMonth = () => {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
+  const yearSpan = document.getElementById('year');
+  const monthSpan = document.getElementById('month');
+
+  yearSpan.textContent = `${currentYear}`;
+  monthSpan.textContent = `${months[currentMonth]}`;
+};
+
+getCurrentYearAndMonth();
