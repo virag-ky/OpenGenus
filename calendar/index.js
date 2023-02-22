@@ -12,6 +12,7 @@ const currentMonth = new Date().getMonth();
 const currentYear = new Date().getFullYear();
 const currentDay = new Date().getDay();
 const daysContainer = document.getElementById('days');
+const errorMessage = document.getElementById('error');
 
 // Create the days of the week
 daysOfWeek.forEach((day) => {
@@ -34,8 +35,18 @@ months.forEach((month) => {
 
 // Select a year
 yearInput.addEventListener('change', () => {
-  yearSpan.textContent = yearInput.value;
-  setDays();
+  if (yearInput.value === '') {
+    errorMessage.textContent =
+      'Please, enter a year between 1970-2100. Field can not be empty.';
+  } else if (yearInput.value.length !== 4) {
+    errorMessage.textContent =
+      'Please, enter a year between 1970-2100.\nYear must be 4 digits long.';
+  } else if (yearInput.value > 2100 || yearInput.value < 1970) {
+    errorMessage.textContent = 'Please, enter a year between 1970-2100.';
+  } else {
+    yearSpan.textContent = yearInput.value;
+    setDays();
+  }
 });
 
 // Set current year as default value
