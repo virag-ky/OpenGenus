@@ -10,6 +10,7 @@ const yearInput = document.getElementById('year');
 const monthInput = document.getElementById('month');
 const currentMonth = new Date().getMonth();
 const currentYear = new Date().getFullYear();
+const currentDay = new Date().getDay();
 const daysContainer = document.getElementById('days');
 
 // Create the days of the week
@@ -32,20 +33,20 @@ months.forEach((month) => {
 });
 
 // Select a year
-yearInput.addEventListener(
-  'change',
-  () => (yearSpan.textContent = yearInput.value)
-);
+yearInput.addEventListener('change', () => {
+  yearSpan.textContent = yearInput.value;
+  setDays();
+});
 
 // Set current year as default value
 yearInput.value = currentYear;
 yearSpan.textContent = yearInput.value;
 
 // Select a month
-monthInput.addEventListener(
-  'change',
-  () => (monthSpan.textContent = monthInput.value)
-);
+monthInput.addEventListener('change', () => {
+  monthSpan.textContent = monthInput.value;
+  setDays();
+});
 
 // Set current month as default value
 monthSpan.textContent = monthInput.value;
@@ -76,29 +77,78 @@ nextArrowBtn.addEventListener('click', () => {
   setDays();
 });
 
-const setDays = () => {
-  daysContainer.innerHTML = '';
-  let daysCount = 1;
+// Set days text
+const setDaysText = () => {
+  // Get first day of month
+  const firstDay = new Date(
+    Number(yearSpan.textContent),
+    months.indexOf(monthSpan.textContent),
+    1
+  )
+    .toDateString()
+    .split(' ')[0];
+
+  // Get last day of month
   const lastDay = new Date(
     Number(yearSpan.textContent),
     months.indexOf(monthSpan.textContent) + 1,
     0
   )
     .toDateString()
-    .split(' ');
+    .split(' ')[2];
 
-  for (let i = 0; i < 5; i++) {
+  let startDay = currentDay;
+
+  switch (firstDay) {
+    case 'Sun':
+      startDay = 0;
+      break;
+    case 'Mon':
+      startDay = 1;
+      break;
+    case 'Tue':
+      startDay = 2;
+      break;
+    case 'Wed':
+      startDay = 3;
+      break;
+    case 'Thu':
+      startDay = 4;
+      break;
+    case 'Fri':
+      startDay = 5;
+      break;
+    case 'Sat':
+      startDay = 6;
+      break;
+    default:
+      startDay = 0;
+  }
+
+  let daysCount = 1;
+
+  for (let x = 1; x <= Number(lastDay); x++) {
+    document.getElementById(`${startDay + 1}`).textContent = daysCount++;
+    startDay++;
+  }
+};
+
+// Create days
+const setDays = () => {
+  daysContainer.innerHTML = '';
+  let daysId = 0;
+
+  for (let i = 0; i <= 5; i++) {
     const week = document.createElement('tr');
     for (let j = 0; j < 7; j++) {
+      daysId++;
       const day = document.createElement('td');
-      day.textContent = daysCount++;
-      if (daysCount > Number(lastDay[2]) + 1) {
-        continue;
-      }
       day.setAttribute('class', 'days');
+      day.setAttribute('id', `${daysId}`);
       week.appendChild(day);
     }
     daysContainer.appendChild(week);
   }
+  setDaysText();
 };
 setDays();
