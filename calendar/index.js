@@ -47,3 +47,27 @@ monthInput.addEventListener(
 
 // Set current month as default value
 monthSpan.textContent = monthInput.value;
+
+// Get previous month
+previousArrowBtn.addEventListener('click', () => {
+  yearSpan.textContent =
+    monthSpan.textContent === 'January'
+      ? Number(yearSpan.textContent) - 1
+      : yearSpan.textContent;
+  monthSpan.textContent =
+    monthSpan.textContent === 'January'
+      ? months[11]
+      : months[months.indexOf(monthSpan.textContent) - 1];
+});
+
+// Get next month
+nextArrowBtn.addEventListener('click', () => {
+  yearSpan.textContent =
+    monthSpan.textContent === 'December'
+      ? Number(yearSpan.textContent) + 1
+      : yearSpan.textContent;
+  monthSpan.textContent =
+    monthSpan.textContent === 'December'
+      ? months[0]
+      : months[months.indexOf(monthSpan.textContent) + 1];
+});
