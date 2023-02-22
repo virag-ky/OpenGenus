@@ -10,11 +10,13 @@ const yearInput = document.getElementById('year');
 const monthInput = document.getElementById('month');
 const currentMonth = new Date().getMonth();
 const currentYear = new Date().getFullYear();
+const daysContainer = document.getElementById('days');
 
 // Create the days of the week
 daysOfWeek.forEach((day) => {
   const dayHeader = document.createElement('th');
   dayHeader.textContent = day;
+  dayHeader.setAttribute('class', 'week');
   weekRow.appendChild(dayHeader);
 });
 
@@ -58,6 +60,7 @@ previousArrowBtn.addEventListener('click', () => {
     monthSpan.textContent === 'January'
       ? months[11]
       : months[months.indexOf(monthSpan.textContent) - 1];
+  setDays();
 });
 
 // Get next month
@@ -70,4 +73,32 @@ nextArrowBtn.addEventListener('click', () => {
     monthSpan.textContent === 'December'
       ? months[0]
       : months[months.indexOf(monthSpan.textContent) + 1];
+  setDays();
 });
+
+const setDays = () => {
+  daysContainer.innerHTML = '';
+  let daysCount = 1;
+  const lastDay = new Date(
+    Number(yearSpan.textContent),
+    months.indexOf(monthSpan.textContent) + 1,
+    0
+  )
+    .toDateString()
+    .split(' ');
+
+  for (let i = 0; i < 5; i++) {
+    const week = document.createElement('tr');
+    for (let j = 0; j < 7; j++) {
+      const day = document.createElement('td');
+      day.textContent = daysCount++;
+      if (daysCount > Number(lastDay[2]) + 1) {
+        continue;
+      }
+      day.setAttribute('class', 'days');
+      week.appendChild(day);
+    }
+    daysContainer.appendChild(week);
+  }
+};
+setDays();

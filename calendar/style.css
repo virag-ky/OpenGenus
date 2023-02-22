@@ -23,7 +23,8 @@ table {
 }
 
 tr,
-th {
+th,
+td {
   border: solid black;
   text-align: center;
 }
