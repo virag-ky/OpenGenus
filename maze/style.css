@@ -4,39 +4,35 @@
   box-sizing: border-box;
 }
 
-#maze {
-  position: relative;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.layer,
-.layer > div {
-  position: absolute;
+#mazeContainer {
+  border: solid black;
+  width: 95%;
+  max-width: 800px;
 }
 
-#tiles > div {
+.row {
+  width: 100%;
+  height: 80px;
+  display: flex;
+}
+
+.wall {
+  width: 100%;
+  height: 100%;
+  background: rgb(100, 66, 253);
   border: solid black;
 }
 
-.default .floor {
-  background-color: lightgrey;
-}
-.default .wall {
-  background-color: skyblue;
-}
-
-.player,
-.goal {
-  transform-origin: center;
-  transform: scale(0.85);
-}
-
-.player {
-  background-color: #90ee90;
-  border: 1px solid green;
-  transition: left 0.2s linear, top 0.2s linear;
-}
-
-.goal {
-  background-color: #ffd700;
-  border: 1px solid #98720b;
+.floor {
+  width: 100%;
+  height: 100%;
+  background: rgb(246, 252, 192);
+  border: solid black;
 }
