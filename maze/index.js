@@ -1,5 +1,10 @@
 const mazeContainer = document.getElementById('mazeContainer');
-const mazeMap = [];
+const mazeMap = [
+  [1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+  [1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1],
+  [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1],
+];
 
 const createMaze = () => {
   const starterRow = [0];
@@ -23,10 +28,9 @@ const createMaze = () => {
   }
 
   // Append starter and finish row
-  const randomIndex1 = Math.round(Math.random() * 7);
-  const randomIndex2 = Math.round(Math.random() * 7);
-  mazeMap.splice(randomIndex1, 0, starterRow);
-  mazeMap.splice(randomIndex2, 0, finishRow);
+  const randomIndex = Math.round(Math.random() * 7);
+  mazeMap.splice(randomIndex, 0, starterRow);
+  mazeMap.splice(randomIndex, 0, finishRow);
 
   // Append top and bottom row
   mazeMap.unshift(topRow);
