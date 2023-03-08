@@ -3,3 +3,40 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+#maze {
+  position: relative;
+}
+
+.layer,
+.layer > div {
+  position: absolute;
+}
+
+#tiles > div {
+  border: solid black;
+}
+
+.default .floor {
+  background-color: lightgrey;
+}
+.default .wall {
+  background-color: skyblue;
+}
+
+.player,
+.goal {
+  transform-origin: center;
+  transform: scale(0.85);
+}
+
+.player {
+  background-color: #90ee90;
+  border: 1px solid green;
+  transition: left 0.2s linear, top 0.2s linear;
+}
+
+.goal {
+  background-color: #ffd700;
+  border: 1px solid #98720b;
+}
