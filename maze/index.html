@@ -8,12 +8,17 @@
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
-    <canvas
-      id="container"
-      width="800px"
-      height="800px"
-      style="border: 1px solid #000000"
-    ></canvas>
-    <script src="./index.js"></script>
+    <div>
+      <label for="layout">Select a maze layout:</label>
+      <select name="layout" id="layout">
+        <option value="layout1">Layout-1</option>
+        <option value="layout2">Layout-2</option>
+        <option value="layout3">Layout-3</option>
+        <option value="layout4">Layout-4</option>
+        <option value="layout5">Layout-5</option>
+      </select>
+    </div>
+    <canvas id="container" width="800px" height="800px"></canvas>
+    <script src="./index.js" type="module"></script>
   </body>
 </html>

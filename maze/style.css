@@ -6,34 +6,13 @@
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 15px;
   height: 100vh;
   background: rgb(223, 231, 255);
 }
-/* 
-#mazeContainer {
-  width: 95%;
-  max-width: 1200px;
-}
-
-.row {
-  width: 100%;
-  height: 80px;
-  display: flex;
-}
-
-.wall {
-  width: 100%;
-  height: 100%;
-  background: rgb(100, 66, 253);
-}
-
-.floor {
-  width: 100%;
-  height: 100%;
-  background: rgb(250, 252, 143);
-} */
 
 canvas {
   display: block;
