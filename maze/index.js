@@ -1,5 +1,3 @@
-import { mazeMap } from './maps.js';
-
 // Create canvas
 const createCanvas = () => {
   const canvasElement = document.createElement('canvas');
@@ -8,6 +6,7 @@ const createCanvas = () => {
   document.body.appendChild(canvasElement);
 
   const canvas = document.querySelector('canvas');
+
   // Get the drawing object
   // The getContext() is a built-in HTML object, with properties and methods for drawing
   return canvas.getContext('2d');
@@ -15,54 +14,126 @@ const createCanvas = () => {
 
 const ctx = createCanvas();
 const selection = document.querySelector('select');
-
-// Set current maze layout
-let currentLayout = mazeMap[0];
+let grid = [];
+let current;
+let arrayStack = [];
 
 // Set width and height for the cells
-const width = 800 / currentLayout[0].length;
-const height = 800 / currentLayout.length;
+let width = 80;
+const columns = 800 / width;
+const rows = 800 / width;
 
-const createMaze = (context, arr) => {
-  for (let x = 0; x < arr.length; x++) {
-    for (let y = 0; y < arr[x].length; y++) {
-      context.beginPath();
+// Create index
+const index = (i, j) => {
+  if (i < 0 || j < 0 || i > columns || j > rows - 1) {
+    return false;
+  }
+  return i + j * columns;
+};
 
-      context.rect(y * width, x * height, width, height);
+// Create cell instances
+function Cell(i, j) {
+  this.i = i;
+  this.j = j;
+  this.walls = [true, true, true, true];
+  this.visited = false;
 
-      context.fillStyle =
-        arr[x][y] === 0 ? 'rgb(250, 253, 175)' : 'rgb(100, 66, 253)';
-      context.fill();
+  this.checkNeighbors = function () {
+    const neighbors = [];
+    const top = grid[index(i, j - 1)];
+    const right = grid[index(i + 1, j)];
+    const bottom = grid[index(i, j + 1)];
+    const left = grid[index(i - 1, j)];
 
-      context.closePath();
+    if (top && !top.visited) {
+      neighbors.push(top);
     }
+    if (right && !right.visited) {
+      neighbors.push(right);
+    }
+    if (bottom && !bottom.visited) {
+      neighbors.push(bottom);
+    }
+    if (left && !left.visited) {
+      neighbors.push(left);
+    }
+
+    if (neighbors.length > 0) {
+      const randomNum = Math.round(Math.random() * neighbors.length);
+      return neighbors[randomNum];
+    }
+  };
+
+  this.show = () => {
+    const x = this.i * width;
+    const y = this.j * width;
+
+    if (this.walls[0]) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + width, y);
+      ctx.fillStyle = 'rgb(250, 253, 175)';
+      ctx.stroke();
+      ctx.closePath();
+    }
+    if (this.walls[1]) {
+      ctx.beginPath();
+      ctx.moveTo(x + width, y);
+      ctx.lineTo(x + width, y + width);
+      ctx.fillStyle = 'rgb(250, 253, 175)';
+      ctx.stroke();
+      ctx.closePath();
+    }
+    if (this.walls[2]) {
+      ctx.beginPath();
+      ctx.moveTo(x + width, y + width);
+      ctx.lineTo(x, y + width);
+      ctx.fillStyle = 'rgb(250, 253, 175)';
+      ctx.stroke();
+      ctx.closePath();
+    }
+    if (this.walls[3]) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + width);
+      ctx.lineTo(x, y);
+      ctx.fillStyle = 'rgb(250, 253, 175)';
+      ctx.stroke();
+      ctx.closePath();
+    }
+
+    if (this.visited) {
+      ctx.beginPath();
+      ctx.rect(x, y, width, width);
+      ctx.fillStyle = 'rgb(250, 150, 175)';
+      ctx.fill();
+      ctx.closePath();
+    }
+  };
+}
+
+const createCells = () => {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < columns; y++) {
+      const cell = new Cell(x, y);
+      grid.push(cell);
+    }
+  }
+  current = grid[0];
+};
+
+createCells();
+
+const drawMaze = () => {
+  for (let z = 0; z < grid.length; z++) {
+    grid[z].show();
+  }
+
+  current.visited = true;
+  const next = current.checkNeighbors();
+
+  if (next) {
+    next.visited = true;
   }
 };
 
-selection.addEventListener('change', (event) => {
-  switch (event.target.value) {
-    case 'layout1':
-      currentLayout = mazeMap[0];
-      break;
-    case 'layout2':
-      currentLayout = mazeMap[1];
-      break;
-    case 'layout3':
-      currentLayout = mazeMap[2];
-      break;
-    case 'layout4':
-      currentLayout = mazeMap[3];
-      break;
-    case 'layout5':
-      currentLayout = mazeMap[4];
-      break;
-    default:
-      currentLayout = mazeMap[0];
-  }
-
-  document.querySelector('canvas').remove();
-  const ctx2 = createCanvas();
-  createMaze(ctx2, currentLayout);
-});
-
-createMaze(ctx, currentLayout);
+drawMaze();
